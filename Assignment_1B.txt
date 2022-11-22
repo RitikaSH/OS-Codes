@@ -1,0 +1,99 @@
+#!/bin/bash
+ createbook()
+{
+if [ -e Student.txt ]
+then 
+echo "File Already Exixts...!"
+echo "*******************************************"
+else
+touch Student.txt
+echo "File Created Sucessfully.....!"
+echo "**********************************************"
+fi
+}
+#insert
+Insertrec()
+{
+echo "Enter the Number Of records : "
+read n
+while [ $n -gt 0 ]
+do
+echo "Enter the Student Record"
+echo "Student Name || Student ID || Student Email"
+read name
+echo "$name">>Student.txt
+echo "Record inserted SuccessFully......"
+echo "*******************************"
+((n--))
+done
+}
+ viewrec()
+{
+ if [ ! -e Student.txt ]
+then
+echo "File Not Found......."
+echo "*********************************"
+else
+echo "Student Name || Student ID || Student Email "
+cat Student.txt
+echo "***********************************"
+fi
+}
+ searchrec()
+{
+ read -p "Enter Record to be searched: " re
+if [ -f Student.txt ] 
+then
+result=$(grep -i "$re" Student.txt)
+if [ "$result" ]
+then
+echo "$result"
+echo "Record Found Sucessfully......."
+else
+echo "Record Not Found......"
+fi
+fi
+ }
+ modifyrec()
+{
+echo "Enter Name Of Student to be Modified :"
+read name
+find=$(grep -i "$name" Student.txt)
+if [ "$find" ]
+then 
+echo "Enter New Data :"
+read mod
+sed -i "s/$name/$mod/" Student.txt
+echo "Record updated Successfully......"
+echo "*************************************************"
+else 
+echo "Recoed not Found.....!"
+fi
+}
+ while true 
+do 
+echo " "
+echo "Welcome to My Book"
+echo "1] Create StudentBook"
+echo "2] Insert DATA"
+echo "3] View Data"
+echo "4] Search Record"
+echo "5] Modify Data"
+echo "6] Exit "
+ echo "Enter The Number Of Opertaion Performed :"
+read choice
+ 
+ case $choice in
+1) createbook ;;
+2) Insertrec ;;
+3) viewrec ;;
+4) searchrec ;;
+5) modifyrec ;;
+6) echo "Qutting" 
+echo "********************************************"
+break;;
+echo "Invalid choice ............"
+echo "************************************************************"
+;;
+esac
+done
